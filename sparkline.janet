@@ -1,28 +1,28 @@
-(def- defaultSteps
+(def default-steps
   "Steps dictionary"
   ["▁" "▂" "▃" "▄" "▅" "▆" "▇" "█"])
 
 (defn- normalize
   "Normalizes the numbers"
-  [numbers stepCount]
-  (def minValue (apply min numbers))
-  (def numCapped (map (fn [n] (- n minValue)) numbers))
-  (def maxValue (apply max numCapped))
+  [numbers step-count]
+  (def min-value (apply min numbers))
+  (def num-capped (map (fn [n] (- n min-value)) numbers))
+  (def max-value (apply max num-capped))
   (map
     (fn [n]
-      (def n1 (/ n maxValue))
-      (def n2 (* n1 stepCount))
-      (if (= n2 stepCount)
-        (- stepCount 1)
+      (def n1 (/ n max-value))
+      (def n2 (* n1 step-count))
+      (if (= n2 step-count)
+        (- step-count 1)
         (math/floor n2)))
-    numCapped))
+    num-capped))
 
 (defn generate
   "Creates sparkline string from array of numbers"
   [numbers &opt steps]
-  (default steps defaultSteps)
-  (def stepCount (length steps))
-  (def indexes (normalize numbers stepCount))
+  (default steps default-steps)
+  (def step-count (length steps))
+  (def indexes (normalize numbers step-count))
   (def buffer @[])
   (string/join
     (reduce
