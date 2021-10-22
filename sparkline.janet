@@ -23,11 +23,9 @@
   (default steps default-steps)
   (def step-count (length steps))
   (def indexes (normalize numbers step-count))
-  (def buffer @[])
   (string/join
-    (reduce
+    (map
       (fn
-        [acc el]
-        (array/push acc (get steps el)))
-      buffer
+        [el]
+        (get steps el))
       indexes)))
